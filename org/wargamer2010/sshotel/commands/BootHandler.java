@@ -3,6 +3,9 @@ package org.wargamer2010.sshotel.commands;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.wargamer2010.signshop.Seller;
@@ -63,7 +66,7 @@ public class BootHandler implements ICommandHandler {
         } else {
             String playerName = args[0];
             SignShopPlayer targetPlayer = PlayerIdentifier.getByName(playerName);
-            if(targetPlayer.GetIdentifier().getOfflinePlayer() == null && targetPlayer.getPlayer() == null) {
+            if(targetPlayer.getIdentifier().getOfflinePlayer() == null && targetPlayer.getPlayer() == null) {
                 commandUtil.sendToPlayerOrConsole(SignShopConfig.getError("player_does_not_exist", null), player);
                 return true;
             }
@@ -79,7 +82,9 @@ public class BootHandler implements ICommandHandler {
     }
 
     @SuppressWarnings("deprecation") // Should use an alternative method here, but nothing seems to work right now
-    private static Block getTarget(Player entity) {
-        return entity.getTargetBlock(null, 200);
+    private static Block getTarget(Player entity)
+    {
+        Set<Material> nullO = null;
+        return entity.getTargetBlock(nullO, 200);
     }
 }

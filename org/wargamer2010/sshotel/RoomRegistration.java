@@ -60,7 +60,7 @@ public class RoomRegistration {
     public static void setPlayerForShop(Seller seller, SignShopPlayer player) {
         String playerString = "";
         if(player != null)
-            playerString = player.GetIdentifier().toString();
+            playerString = player.getIdentifier().toString();
         seller.addMisc("Renter", playerString);
 
         Sign sign = (Sign) seller.getSign().getState();
@@ -78,7 +78,7 @@ public class RoomRegistration {
     }
 
     public static List<Block> getRentsForPlayer(SignShopPlayer player) {
-        return Storage.get().getShopsWithMiscSetting("Renter", player.GetIdentifier().toString());
+        return Storage.get().getShopsWithMiscSetting("Renter", player.getIdentifier().toString());
     }
 
     /**
