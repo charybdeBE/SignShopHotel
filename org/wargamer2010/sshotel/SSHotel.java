@@ -67,7 +67,14 @@ public class SSHotel extends JavaPlugin {
 
         setupCommands();
 
+
         SignShopConfig.addLinkable("WOODEN_DOOR", "door");
+        SignShopConfig.addLinkable("DARK_OAK_DOOR", "door");
+        SignShopConfig.addLinkable("BIRCH_DOOR", "door");
+        SignShopConfig.addLinkable("JUNGLE_DOOR", "door");
+        SignShopConfig.addLinkable("ACACIA_DOOR", "door");
+        SignShopConfig.addLinkable("SPRUCE_DOOR", "door");
+
         SignShopConfig.addLinkable("IRON_DOOR", "door");
         SignShopConfig.addLinkable("IRON_DOOR_BLOCK", "door");
         SignShopConfig.addLinkable("STONE_BUTTON", "button");
