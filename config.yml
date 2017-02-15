@@ -21,6 +21,8 @@ signs:
   Hotel: HotelSign,takePlayerMoney,giveOwnerMoney
   iHotel: HotelSign,takePlayerMoney
 messages:
+  tp:
+    price_for_tp: The tp for !hotel will cost you !price
   setup:
     Hotel: You have created a Hotel sign that costs !price to rent a room for !renttime!
     iHotel: You have created an iHotel sign that costs !price to rent a room for !renttime!
@@ -56,3 +58,11 @@ errors:
   booted_from_all_rooms: Player has been successfully booted from all rooms
   you_have_been_booted_sign: You have been booted from room !roomnr at Hotel !hotel. Contact the Server Administrator if you have questions.
   you_have_been_booted_all: You have been booted from all Hotel rooms you are currently renting. Contact the Server Administrator if you have questions.
+  no_rented_room: You don't have rented a room !
+  no_rented_room_hotel: You don't have rented a room in this hotel !
+tp_hotel:
+  price: 100
+  price_owner: 10
+  state_account: hotelier
+  dynamic_price: true
+  minimum_price: 5

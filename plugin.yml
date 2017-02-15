@@ -1,13 +1,20 @@
 name: SignShopHotel
 main: org.wargamer2010.sshotel.SSHotel
-version: 1.0.7Dev
+version: 1.0.8Dev
 dev-url: http://dev.bukkit.org/server-mods/signshop
 depend: [SignShop]
-author: Wargamer2010
+author: Wargamer2010, CharybdeBE
 commands:
   signshophotel:
     description: Admin commands for SignShopHotel
-    usage: /signshophotel [reload|boot|help]
+    usage: /signshophotel [reload|boot|help|tp]
   sshotel:
     description: Admin commands for SignShopHotel
-    usage: /signshophotel [reload|boot|help]
+    usage: /sshophotel [reload|boot|help|tp]
+  stp:
+    description: Teleport to an hotel
+    usage: /stp [hotel]
+permissions:
+    sshotel.tp:
+        description: Give access to the tp permission
+        default: true

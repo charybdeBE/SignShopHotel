@@ -14,6 +14,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wargamer2010.signshop.Seller;
 import org.wargamer2010.signshop.SignShop;
+import org.wargamer2010.signshop.Vault;
 import org.wargamer2010.signshop.commands.CommandDispatcher;
 import org.wargamer2010.signshop.configuration.*;
 import org.wargamer2010.signshop.metrics.setupMetrics;
@@ -63,6 +64,8 @@ public class SSHotel extends JavaPlugin {
             for(Map.Entry<String, HashMap<String, String>> entry : configUtil.fetchHasmapInHashmap("messages", ymlThing).entrySet()) {
                 SignShopConfig.registerMessages(entry.getKey(), entry.getValue());
             }
+
+            ((TeleportHandler) TeleportHandler.getInstance()).setup(configUtil.fetchStringStringHashMap("tp_hotel", ymlThing));
         }
 
         setupCommands();
@@ -121,8 +124,17 @@ public class SSHotel extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[]) {
         String commandName = cmd.getName().toLowerCase();
-        if(!commandName.equalsIgnoreCase("signshophotel") && !commandName.equalsIgnoreCase("sshotel"))
+        if(!commandName.equalsIgnoreCase("signshophotel") && !commandName.equalsIgnoreCase("sshotel") && !commandName.equalsIgnoreCase("stp"))
             return true;
+
+        if(commandName.equalsIgnoreCase("stp")){
+            if(args.length == 0){
+                args = new String[]{ "tp" };
+            }
+            else{
+                args = new String[]{ "tp", args[0]};
+            }
+        }
         return commandUtil.handleCommand(sender, cmd, commandLabel, args, commandDispatcher);
     }
 
@@ -152,6 +164,7 @@ public class SSHotel extends JavaPlugin {
         commandDispatcher.registerHandler("boot", BootHandler.getInstance());
         commandDispatcher.registerHandler("helper", HelpHandler.getInstance());
         commandDispatcher.registerHandler("", HelpHandler.getInstance());
+        commandDispatcher.registerHandler("tp", TeleportHandler.getInstance());
     }
 
     /**
