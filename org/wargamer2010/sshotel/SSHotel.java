@@ -23,6 +23,7 @@ import org.wargamer2010.signshop.util.commandUtil;
 import org.wargamer2010.signshop.util.signshopUtil;
 import org.wargamer2010.sshotel.commands.*;
 import org.wargamer2010.sshotel.listeners.ExpiredRentListener;
+import org.wargamer2010.sshotel.listeners.SignShopHouseListener;
 import org.wargamer2010.sshotel.listeners.SignShopListener;
 
 public class SSHotel extends JavaPlugin {
@@ -50,6 +51,7 @@ public class SSHotel extends JavaPlugin {
             pm.disablePlugin(this);
             return;
         }
+        pm.registerEvents(new SignShopHouseListener(), this);
         pm.registerEvents(new SignShopListener(), this);
         pm.registerEvents(new ExpiredRentListener(), this);
         createDir();

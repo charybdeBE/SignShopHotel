@@ -81,7 +81,7 @@ public class SSHotelUtil {
         if(temp == null)
             return false;
         for(String op : temp)
-            if(op.equalsIgnoreCase("hotelsign"))
+            if(op.equalsIgnoreCase("hotelsign") || op.equalsIgnoreCase("housesign"))
                 return true;
         return false;
     }

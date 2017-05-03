@@ -27,6 +27,24 @@ public class RoomRegistration {
         return (storage.getShopsWithMiscSetting("Hotel", hotel).size() + 1);
     }
 
+    public static int registerHouse(Block door, String city, String street) {
+        Storage storage = Storage.get();
+        if(!storage.getShopsByBlock(door).isEmpty())
+            return -1;
+
+        int nr = 1;
+        for(Block b : storage.getShopsWithMiscSetting("City", city)){
+            String streetT = storage.getSeller(b.getLocation()).getMisc("Street");
+            System.out.println(city + " " + streetT);
+            if(street.equals(streetT)){
+                nr++;
+            }
+        }
+
+        return nr;
+    }
+
+
     public static int getRoomNumber(Seller seller) {
         if(seller.hasMisc("RoomNr")) {
             try {

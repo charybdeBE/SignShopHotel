@@ -20,31 +20,41 @@ MaxRentsPerPerson: 0
 signs:
   Hotel: HotelSign,takePlayerMoney,giveOwnerMoney
   iHotel: HotelSign,takePlayerMoney
+  House: HouseSign,takePlayerMoney,giveOwnerMoney
 messages:
   tp:
     price_for_tp: The tp for !hotel will cost you !price
   setup:
     Hotel: You have created a Hotel sign that costs !price to rent a room for !renttime!
     iHotel: You have created an iHotel sign that costs !price to rent a room for !renttime!
+    House: Vous avez mis en vente cette maison pour !price
   confirm:
     Hotel: Pay !price to rent this room for !renttime?
     iHotel: Pay !price to rent this room for !renttime?
+    House: Payer !price pour cette maison ?
   transaction:
     Hotel: You paid !price to rent this room for !renttime!
     iHotel: You paid !price to rent this room for !renttime!
+    House: Vous avez payer !price pour cette maison.
   transaction_owner:
     Hotel: \!customer rented room nr. !roomnr in !hotel for !price!
     iHotel: ''
+    House: \!customer a achete la maison situe au numero !nr de !street dans la ville !city pour !price
   help:
     Hotel: This sign exchanges the customer's money for the ability to open a door to a hotel room.  Line 2 must say the name of the hotel.  Line 3 must be the amount of time the rental takes (e.g. 20s for 20 seconds, 24h for 1 day).  Line 4 is the cost of the rental.
     iHotel: This sign exchanges the customer's money for the ability to open a door to a hotel room.  Line 2 must say the name of the hotel.  Line 3 must be the amount of time the rental takes (e.g. 20s for 20 seconds, 24h for 1 day).  Line 4 is the cost of the rental. The owner does not get money from this sign.
+    House: ''
 errors:
   need_door: You need to link at least one door to build this shop!
   invalid_time: Invalid time period specified on the third line.
   invalid_hotel: Invalid hotel name on the second line.
+  invalid_city: Invalid City Name on the second line.
+  invalid_street: Invalid Street Name on the third line.
   no_door: There's no door attached to this room!
   already_rented_self_timeleft: You've already rented this room, there is !timeleft left.
   already_rented_other_timeleft: This room has already been rented, there is !timeleft left before it can be rented again.
+  already_buy_self: You've already  buy this house .
+  already_buy_other: This hous is not to sell.
   could_not_rent_room: Could not rent the room, please tell your administrator to check the server.log for more information.
   already_registered: This room is already registered!
   no_entry: You have not rented this room, so you are not allowed to enter!
@@ -60,6 +70,7 @@ errors:
   you_have_been_booted_all: You have been booted from all Hotel rooms you are currently renting. Contact the Server Administrator if you have questions.
   no_rented_room: You don't have rented a room !
   no_rented_room_hotel: You don't have rented a room in this hotel !
+
 tp_hotel:
   price: 100
   price_owner: 10
