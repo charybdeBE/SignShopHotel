@@ -37,7 +37,6 @@ public class SignShopHouseListener implements Listener {
 
         Sign sign = (Sign)event.getSign().getState();
         String city = SSHotelUtil.trimBrackets(sign.getLine(1));
-        String street = SSHotelUtil.trimBrackets(sign.getLine(2));
 
         Block bDoor = SSHotelUtil.getHotelPartFromBlocklist(event.getActivatables());
 
@@ -49,12 +48,11 @@ public class SignShopHouseListener implements Listener {
         }
 
         event.setMiscSetting("City", city);
-        event.setMiscSetting("Street", street);
         event.setMiscSetting("Nr", streetNum.toString());
         event.setMiscSetting("Price", SSHotelUtil.getNumberFromFourthLine(event.getSign()).toString());
         event.setMiscSetting("Renter", "");
 
-        sign.setLine(2, (SSHotelUtil.trimBrackets(sign.getLine(2))  + ", n°" + streetNum));
+        sign.setLine(2, ("N°" + streetNum));
         sign.update();
 
         SSDoor door = new SSDoor(bDoor);

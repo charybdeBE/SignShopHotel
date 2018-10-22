@@ -32,16 +32,7 @@ public class RoomRegistration {
         if(!storage.getShopsByBlock(door).isEmpty())
             return -1;
 
-        int nr = 1;
-        for(Block b : storage.getShopsWithMiscSetting("City", city)){
-            String streetT = storage.getSeller(b.getLocation()).getMisc("Street");
-            System.out.println(city + " " + streetT);
-            if(street.equals(streetT)){
-                nr++;
-            }
-        }
-
-        return nr;
+        return storage.getShopsWithMiscSetting("City", city).size() + 1;
     }
 
 

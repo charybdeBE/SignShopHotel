@@ -22,7 +22,6 @@ public class HouseSign implements SignShopOperation {
 
         Sign sign = (Sign)ssArgs.getSign().get().getState();
 
-
         ssArgs.getPrice().set(SSHotelUtil.getNumberFromFourthLine(ssArgs.getSign().get()));
 
         String city = sign.getLine(1);
@@ -30,12 +29,6 @@ public class HouseSign implements SignShopOperation {
             ssArgs.getPlayer().get().sendMessage(SignShopConfig.getError("invalid_city", ssArgs.getMessageParts()));
             return false;
         }
-        String street = sign.getLine(2);
-        if(street == null || SSHotelUtil.trimBrackets(street).isEmpty()) {
-            ssArgs.getPlayer().get().sendMessage(SignShopConfig.getError("invalid_street", ssArgs.getMessageParts()));
-            return false;
-        }
-
 
         return true;
     }
@@ -46,7 +39,6 @@ public class HouseSign implements SignShopOperation {
         if(door == null)
             return false;
         ssArgs.setMessagePart("!city", ssArgs.miscSettings.get("City"));
-        ssArgs.setMessagePart("!street", ssArgs.miscSettings.get("Street"));
         ssArgs.setMessagePart("!nr", ssArgs.miscSettings.get("Nr"));
         SignShopPlayer player = ssArgs.getPlayer().get();
 
@@ -81,7 +73,6 @@ public class HouseSign implements SignShopOperation {
         if(door == null)
             return false;
         ssArgs.setMessagePart("!city", ssArgs.miscSettings.get("City"));
-        ssArgs.setMessagePart("!street", ssArgs.miscSettings.get("Street"));
         ssArgs.setMessagePart("!nr", ssArgs.miscSettings.get("Nr"));
 
         Seller seller = Storage.get().getSeller(ssArgs.getSign().get().getLocation());
