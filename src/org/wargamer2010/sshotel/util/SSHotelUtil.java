@@ -96,7 +96,7 @@ public class SSHotelUtil {
         if(RoomRegistration.getPlayerFromShop(seller) == null)
             return null;
         SignShopPlayer currentRenter = RoomRegistration.getPlayerFromShop(seller);
-        RoomRegistration.setPlayerForShop(seller, null);
+        RoomRegistration.setPlayerForShop(seller, null, false);
 
         for(Block door : seller.getActivatables()) {
             if(itemUtil.clickedDoor(door))

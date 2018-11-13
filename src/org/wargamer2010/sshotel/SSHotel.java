@@ -49,6 +49,8 @@ public class SSHotel extends JavaPlugin {
         if(!pm.isPluginEnabled("SignShop")) {
             log("SignShop is not loaded, can not continue.", Level.SEVERE);
             pm.disablePlugin(this);
+            System.out.println('a');
+            System.out.println('a');
             return;
         }
         pm.registerEvents(new SignShopHouseListener(), this);
@@ -113,7 +115,7 @@ public class SSHotel extends JavaPlugin {
                 SignShop.log(String.format("Fixing stale rent for hotelroom at '%s'",
                         signshopUtil.convertLocationToString(seller.getSignLocation()))
                         , Level.WARNING);
-                RoomRegistration.setPlayerForShop(seller, null);
+                RoomRegistration.setPlayerForShop(seller, null, false);
             }
         }
     }

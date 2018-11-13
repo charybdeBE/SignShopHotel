@@ -66,7 +66,7 @@ public class BootHandler implements ICommandHandler {
         } else {
             String playerName = args[0];
             SignShopPlayer targetPlayer = PlayerIdentifier.getByName(playerName);
-            if(targetPlayer.getIdentifier().getOfflinePlayer() == null && targetPlayer.getPlayer() == null) {
+            if(targetPlayer.getPlayer() == null && targetPlayer.getPlayer() == null) {
                 commandUtil.sendToPlayerOrConsole(SignShopConfig.getError("player_does_not_exist", null), player);
                 return true;
             }

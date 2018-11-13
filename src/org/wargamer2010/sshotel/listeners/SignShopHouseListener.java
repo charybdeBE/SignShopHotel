@@ -40,7 +40,7 @@ public class SignShopHouseListener implements Listener {
 
         Block bDoor = SSHotelUtil.getHotelPartFromBlocklist(event.getActivatables());
 
-        Integer streetNum = RoomRegistration.registerHouse(bDoor, city, street);
+        Integer streetNum = RoomRegistration.registerHouse(bDoor, city);
         if(streetNum < 0) {
             event.getPlayer().sendMessage(SignShopConfig.getError("already_registered", event.getMessageParts()));
             event.setCancelled(true);

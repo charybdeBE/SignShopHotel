@@ -27,7 +27,7 @@ public class RoomRegistration {
         return (storage.getShopsWithMiscSetting("Hotel", hotel).size() + 1);
     }
 
-    public static int registerHouse(Block door, String city, String street) {
+    public static int registerHouse(Block door, String city) {
         Storage storage = Storage.get();
         if(!storage.getShopsByBlock(door).isEmpty())
             return -1;
@@ -66,11 +66,15 @@ public class RoomRegistration {
         return null;
     }
 
-    public static void setPlayerForShop(Seller seller, SignShopPlayer player) {
+    public static void setPlayerForShop(Seller seller, SignShopPlayer player, Boolean house) {
         String playerString = "";
         if(player != null)
-            playerString = player.getIdentifier().toString();
-        seller.addMisc("Renter", playerString);
+            playerString = player.getName();
+        if(house){
+            seller.addMisc("Owner", playerString);
+        } else {
+            seller.addMisc("Renter", playerString);
+        }
 
         Sign sign = (Sign) seller.getSign().getState();
 
@@ -87,7 +91,11 @@ public class RoomRegistration {
     }
 
     public static List<Block> getRentsForPlayer(SignShopPlayer player) {
-        return Storage.get().getShopsWithMiscSetting("Renter", player.getIdentifier().toString());
+        return Storage.get().getShopsWithMiscSetting("Renter", player.getName());
+    }
+
+    public static List<Block> getHousesForPlayer(SignShopPlayer player) {
+        return Storage.get().getShopsWithMiscSetting("Owner", player.getName());
     }
 
     /**

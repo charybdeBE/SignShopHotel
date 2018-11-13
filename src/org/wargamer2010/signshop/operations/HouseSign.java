@@ -81,7 +81,7 @@ public class HouseSign implements SignShopOperation {
         seller.addMisc("Price", fPrice.toString());
         ssArgs.getPrice().set(fPrice);
 
-        RoomRegistration.setPlayerForShop(seller, ssArgs.getPlayer().get());
+        RoomRegistration.setPlayerForShop(seller, ssArgs.getPlayer().get(), true);
 
 
         return true;

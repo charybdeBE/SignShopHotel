@@ -15,6 +15,8 @@ import org.wargamer2010.sshotel.RoomRegistration;
 import org.wargamer2010.sshotel.util.SSHotelUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by laurent on 14.02.17.
@@ -45,10 +47,11 @@ public class TeleportHandler implements ICommandHandler {
         List<Block> placesOwned = RoomRegistration.getHousesForPlayer(signShopPlayer);
         Storage storage = Storage.get();
 
-        if(!placesRented.size() && !placesOwned.size()){
+        if(placesRented.size() >= 0 && placesOwned.size() >= 0){
             signShopPlayer.sendMessage(SignShopConfig.getError("no_rented_room", null));
             return true;
         }
+        List<Block> places = new ArrayList<>();
         if(args.length == 0){
             HashMap<String, Integer> already = new HashMap<>(); //This is to avoid double entry in the same hotel
             for(Block b : placesRented){
@@ -59,26 +62,28 @@ public class TeleportHandler implements ICommandHandler {
                 already.put(hotel, 1);
                 String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "  Hotel disponibles :" + ChatColor.DARK_GREEN + hotel;
                 sender.sendMessage(message);
+                places.add(b);
             }
             for(Block b : placesOwned){
                 Seller shop = storage.getSeller(b.getLocation());
                 String city = shop.getMisc("City");
                 if(already.containsKey(city))
                     continue;
-                already.put(hotel, 1);
+                already.put(city, 1);
                 String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "  Villes disponibles :" + ChatColor.DARK_GREEN + city;
                 sender.sendMessage(message);
+                places.add(b);
             }
             return true;
         }
 
         String place = args[0];
 
-        List<Block> places = new ArrayList(placesOwned, placesRented);
         List<Block> hotelSelected = storage.getShopsWithMiscSetting("Hotel", place);
         List<Block> houseSelected = storage.getShopsWithMiscSetting("House", place);
 
-        List<Block> selected = new ArrayList(hotelSelected, houseSelected);
+        List<Block> selected = new ArrayList(hotelSelected);
+        selected.addAll(houseSelected);
 
 
         for(Block b : places){
