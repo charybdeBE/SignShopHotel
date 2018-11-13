@@ -90,6 +90,7 @@ public class RoomRegistration {
         return getRentsForPlayer(player).size();
     }
 
+
     public static List<Block> getRentsForPlayer(SignShopPlayer player) {
         return Storage.get().getShopsWithMiscSetting("Renter", player.getName());
     }

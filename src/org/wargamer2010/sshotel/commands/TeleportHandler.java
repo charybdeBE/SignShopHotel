@@ -29,7 +29,7 @@ public class TeleportHandler implements ICommandHandler {
 
     }
 
-    public void setup(HashMap<String, String> map){
+    public void setup(HashMap<String, String> map) {
     }
 
     public static ICommandHandler getInstance() {
@@ -39,7 +39,7 @@ public class TeleportHandler implements ICommandHandler {
     @Override
     public boolean handle(String command, String[] args, SignShopPlayer signShopPlayer) {
         Player sender = signShopPlayer.getPlayer();
-        if(!signShopPlayer.isOp() && !sender.hasPermission("sshotel.tp")){
+        if (!signShopPlayer.isOp() && !sender.hasPermission("sshotel.tp")) {
             return true;
         }
 
@@ -47,63 +47,52 @@ public class TeleportHandler implements ICommandHandler {
         List<Block> placesOwned = RoomRegistration.getHousesForPlayer(signShopPlayer);
         Storage storage = Storage.get();
 
-        if(placesRented.size() >= 0 && placesOwned.size() >= 0){
+        if (placesRented.size() <= 0 && placesOwned.size() <= 0) {
             signShopPlayer.sendMessage(SignShopConfig.getError("no_rented_room", null));
             return true;
         }
-        List<Block> places = new ArrayList<>();
-        if(args.length == 0){
-            HashMap<String, Integer> already = new HashMap<>(); //This is to avoid double entry in the same hotel
-            for(Block b : placesRented){
-                Seller shop = storage.getSeller(b.getLocation());
-                String hotel = shop.getMisc("Hotel");
-                if(already.containsKey(hotel))
-                    continue;
-                already.put(hotel, 1);
-                String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "  Hotel disponibles :" + ChatColor.DARK_GREEN + hotel;
-                sender.sendMessage(message);
-                places.add(b);
+        HashMap<String, Block> already = new HashMap<>(); //This is to avoid double entry in the same hotel
+        for (Block b : placesRented) {
+            Seller shop = storage.getSeller(b.getLocation());
+            String hotel = shop.getMisc("Hotel").toLowerCase();
+            if (already.containsKey(hotel))
+                continue;
+            already.put(hotel, b);
+        }
+        for (Block b : placesOwned) {
+            Seller shop = storage.getSeller(b.getLocation());
+            String city = shop.getMisc("City").toLowerCase();
+            if (already.containsKey(city))
+                continue;
+            already.put(city, b);
+        }
+
+        if (args.length == 0) {
+            String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "Villes et Hotels disponibles :" + ChatColor.DARK_GREEN;
+            for (String place : already.keySet()) {
+                message += " " + place;
             }
-            for(Block b : placesOwned){
-                Seller shop = storage.getSeller(b.getLocation());
-                String city = shop.getMisc("City");
-                if(already.containsKey(city))
-                    continue;
-                already.put(city, 1);
-                String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "  Villes disponibles :" + ChatColor.DARK_GREEN + city;
-                sender.sendMessage(message);
-                places.add(b);
-            }
+            sender.sendMessage(message);
             return true;
         }
 
-        String place = args[0];
+        String place = args[0].toLowerCase();
 
-        List<Block> hotelSelected = storage.getShopsWithMiscSetting("Hotel", place);
-        List<Block> houseSelected = storage.getShopsWithMiscSetting("House", place);
-
-        List<Block> selected = new ArrayList(hotelSelected);
-        selected.addAll(houseSelected);
-
-
-        for(Block b : places){
-            for(Block h : selected) {
-                if (compareBlock(b, h)) {
-                    sender.teleport(b.getLocation());
-                    return true;
-                }
-            }
+        if(already.containsKey(place)){
+           sender.teleport(already.get(place).getLocation());
+           return true;
         }
+
         signShopPlayer.sendMessage(SignShopConfig.getError("no_rented_room_hotel", null));
 
 
         return true;
     }
 
-    private boolean compareBlock(Block a, Block b){
-        if(a.getX() == b.getX()){
-            if(a.getY() == b.getY()){
-                if(a.getZ() == b.getZ()){
+    private boolean compareBlock(Block a, Block b) {
+        if (a.getX() == b.getX()) {
+            if (a.getY() == b.getY()) {
+                if (a.getZ() == b.getZ()) {
                     return true;
                 }
             }
