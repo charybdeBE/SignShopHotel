@@ -4,6 +4,7 @@ version: 1.0.8Dev
 dev-url: http://dev.bukkit.org/server-mods/signshop
 depend: [SignShop]
 author: Wargamer2010, CharybdeBE
+api-version: 1.14
 commands:
   signshophotel:
     description: Admin commands for SignShopHotel

@@ -14,6 +14,11 @@ import org.wargamer2010.sshotel.util.SSHotelUtil;
 public class HouseSign implements SignShopOperation {
     @Override
     public Boolean setupOperation(SignShopArguments ssArgs) {
+
+        if (!ssArgs.getPlayer().get().isOp() && !ssArgs.getPlayer().get().getPlayer().hasPermission("sshotel.notaire")) {
+            return false;
+        }
+
         Block bDoor = SSHotelUtil.getHotelPartFromBlocklist(ssArgs.getActivatables().get());
         if(bDoor == null) {
             ssArgs.getPlayer().get().sendMessage(SignShopConfig.getError("need_door", ssArgs.getMessageParts()));

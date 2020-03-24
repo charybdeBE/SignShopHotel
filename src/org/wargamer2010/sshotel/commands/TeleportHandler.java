@@ -1,22 +1,20 @@
 package org.wargamer2010.sshotel.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.wargamer2010.signshop.Seller;
-import org.wargamer2010.signshop.SignShop;
-import org.wargamer2010.signshop.Vault;
 import org.wargamer2010.signshop.commands.ICommandHandler;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.configuration.Storage;
 import org.wargamer2010.signshop.player.SignShopPlayer;
-import org.wargamer2010.signshop.util.economyUtil;
 import org.wargamer2010.sshotel.RoomRegistration;
-import org.wargamer2010.sshotel.util.SSHotelUtil;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by laurent on 14.02.17.
@@ -70,7 +68,7 @@ public class TeleportHandler implements ICommandHandler {
         if (args.length == 0) {
             String message = ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "Villes et Hotels disponibles :" + ChatColor.DARK_GREEN;
             for (String place : already.keySet()) {
-                message += " " + place;
+                message += " " + place + "("+getCost(already.get(place), sender)+" charbon de bois)";
             }
             sender.sendMessage(message);
             return true;
@@ -79,7 +77,14 @@ public class TeleportHandler implements ICommandHandler {
         String place = args[0].toLowerCase();
 
         if(already.containsKey(place)){
-           sender.teleport(already.get(place).getLocation());
+            int cost = getCost(already.get(place), sender);
+            if(countNumberOfItem(sender.getInventory(), Material.CHARCOAL) >= cost){
+                Inventory after = removeNumberFromInventory(sender.getInventory(), Material.CHARCOAL, cost);
+                sender.updateInventory();
+                sender.teleport(already.get(place).getLocation());
+            } else {
+                sender.sendMessage(ChatColor.GOLD + "[SignShop] " + ChatColor.WHITE + "Pas assez de charbon" + ChatColor.DARK_GREEN);
+            }
            return true;
         }
 
@@ -98,5 +103,40 @@ public class TeleportHandler implements ICommandHandler {
             }
         }
         return false;
+    }
+
+
+    private int getCost(Block shop, Player p){
+        Location l1 = p.getLocation();
+        Location l2 = shop.getLocation();
+        double dist = l1.distance(l2);
+        return (int) Math.floor(dist / 64) + 1;
+    }
+
+    //TODO export to library
+    private int countNumberOfItem(Inventory inventory, Material item){
+        int res = 0;
+        for (ItemStack stackk : inventory) {
+            if (stackk != null && stackk.getType() == item) {
+                res += stackk.getAmount();
+            }
+        }
+        return res;
+    }
+
+    private Inventory removeNumberFromInventory(Inventory inventory, Material item, int count){
+        int reminder = count;
+        for (ItemStack stackk : inventory) {
+            if (stackk != null && stackk.getType() == item) {
+                if (reminder > stackk.getAmount()) {
+                    reminder -= stackk.getAmount();
+                    stackk.setAmount(0);
+                } else if (reminder > 0) {
+                    stackk.setAmount(stackk.getAmount() - reminder);
+                    reminder = 0;
+                }
+            }
+        }
+        return inventory;
     }
 }
